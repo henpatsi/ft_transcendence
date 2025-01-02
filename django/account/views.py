@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .forms import CreateAccountForm
-from .models import Account
+
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -19,10 +20,9 @@ def create_account(request):
         form = CreateAccountForm(request.POST)
         
         if form.is_valid():
-            account = Account(username=form.cleaned_data["username"], password=form.cleaned_data["password"])
 
             try:
-                account.save()
+                user = User.objects.create_user(form.cleaned_data["username"], None, form.cleaned_data["password"])
                 return HttpResponse("Success!")
             except:
                 return render_empty_form(request, "Username already exists!")

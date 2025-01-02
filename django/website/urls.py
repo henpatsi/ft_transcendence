@@ -23,4 +23,6 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('history/', include('match_history.urls')),
     path('pong/', include('pong.urls')),
+
+    # path("accounts/", include("django.contrib.auth.urls")),
 ]
