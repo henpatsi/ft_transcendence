@@ -14,14 +14,8 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def account(request):
     name = request.user.username
-    try:
-        wins = Match.objects.filter(winner_id=request.user.id).count()
-    except:
-        wins = 0
-    try:
-        losses = Match.objects.filter(loser_id=request.user.id).count()
-    except:
-        losses = 0
+    wins = Match.objects.filter(winner_id=request.user.id).count()
+    losses = Match.objects.filter(loser_id=request.user.id).count()
     return render(request, 'account.html', {'username': name, 'wins': wins, 'losses': losses})
 
 
