@@ -5,10 +5,13 @@
     <ul>
         <li><a href="/pong">Play</a></li>
         <li><a href="/history">Match History</a></li>
-        <li><a href="/account">Account</a></li>
+        <li><a href="/accounts">Account</a></li>
+        <li><a href="/accounts/logout">Logout</a></li>
     </ul>
     {% else %}
-    <a href="/account/login">Login</a>
-    <a href="/account/create_account">Create Account</a>
+    <ul></ul>
+        <li><a href="/accounts/login">Login</a></li>
+        <li><a href="/accounts/create_account">Create Account</a></li>
+    </ul>
     {% endif %}
 </html>

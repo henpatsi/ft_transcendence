@@ -5,9 +5,11 @@ from .forms import TestPongForm
 
 from match_history.models import Match
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def home(request):
+@login_required
+def pong(request):
     if request.method == "POST":
         form = TestPongForm(request.POST)
         if form.is_valid():

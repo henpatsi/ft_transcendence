@@ -3,13 +3,26 @@ from django.http import HttpResponse
 
 from .forms import CreateAccountForm, LoginForm
 
+from match_history.models import Match
+
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-def home(request):
-    return render(request, 'account.html', {'name': 'Henri', 'username': 'tupperwarefan', 'wins': '42', 'losses': '0'})
+@login_required
+def account(request):
+    name = request.user.username
+    try:
+        wins = Match.objects.filter(winner_id=request.user.id).count()
+    except:
+        wins = 0
+    try:
+        losses = Match.objects.filter(loser_id=request.user.id).count()
+    except:
+        losses = 0
+    return render(request, 'account.html', {'username': name, 'wins': wins, 'losses': losses})
 
 
 def create_account(request):
@@ -20,7 +33,7 @@ def create_account(request):
                 user = User.objects.create_user(form.cleaned_data["username"],
                                                 form.cleaned_data["email"],
                                                 form.cleaned_data["password"])
-                return redirect('/account/login')
+                return redirect('/accounts/login/')
             except:
                 return render(request, 'create_account.html', {"form": form, "error": "Username already exists!"})
     else:
@@ -43,3 +56,8 @@ def login_user(request):
         form = LoginForm()
 
     return render(request, 'login.html', {"form": form, "error": ""})
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('/')
