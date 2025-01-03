@@ -1,10 +1,14 @@
 <html>
     <h1>Welcome to Pong!</h1>
+
+    {% if logged_in %}
     <ul>
         <li><a href="/pong">Play</a></li>
         <li><a href="/history">Match History</a></li>
         <li><a href="/account">Account</a></li>
     </ul>
-
+    {% else %}
+    <a href="/account/login">Login</a>
     <a href="/account/create_account">Create Account</a>
+    {% endif %}
 </html>
